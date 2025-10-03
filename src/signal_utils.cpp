@@ -2,25 +2,11 @@
 #include <fstream>
 #include <sstream>
 #include <cmath>
-#include <complex>
+#include <vector>
 #include <iostream>
+#include <fftw3.h>
 
-// Simple DFT (for demonstration, can be replaced with FFT library)
-std::vector<float> computeFFT(const std::vector<float> &signal) {
-    int N = signal.size();
-    std::vector<float> magnitude(N/2, 0.0f);
-
-    for(int k = 0; k < N/2; k++) {
-        std::complex<float> sum(0.0f,0.0f);
-        for(int n = 0; n < N; n++) {
-            float angle = -2.0f * M_PI * k * n / N;
-            sum += std::complex<float>(signal[n]*cos(angle), signal[n]*sin(angle));
-        }
-        magnitude[k] = std::abs(sum)/N;
-    }
-    return magnitude;
-}
-
+// Read CSV
 std::vector<float> readCSV(const std::string &filename) {
     std::vector<float> data;
     std::ifstream file(filename);
@@ -41,6 +27,7 @@ std::vector<float> readCSV(const std::string &filename) {
     return data;
 }
 
+// Save CSV
 void saveCSV(const std::string &filename, const std::vector<float> &data) {
     std::ofstream file(filename);
     if(!file.is_open()) {
@@ -51,4 +38,27 @@ void saveCSV(const std::string &filename, const std::vector<float> &data) {
         file << val << "\n";
     }
     file.close();
+}
+
+// Compute FFT using FFTW
+std::vector<float> computeFFT(const std::vector<float> &signal) {
+    int N = signal.size();
+    std::vector<float> magnitude(N/2, 0.0f);
+
+    float* in = (float*) fftwf_malloc(sizeof(float) * N);
+    fftwf_complex* out = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * N);
+
+    for(int i=0;i<N;i++) in[i] = signal[i];
+
+    fftwf_plan plan = fftwf_plan_dft_r2c_1d(N, in, out, FFTW_ESTIMATE);
+    fftwf_execute(plan);
+
+    for(int k=0;k<N/2;k++)
+        magnitude[k] = std::sqrt(out[k][0]*out[k][0] + out[k][1]*out[k][1]) / N;
+
+    fftwf_destroy_plan(plan);
+    fftwf_free(in);
+    fftwf_free(out);
+
+    return magnitude;
 }
