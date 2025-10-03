@@ -52,3 +52,8 @@ python fft_plot_sitar.py
 - Python  
 - numpy  
 - matplotlib
+
+## Output Graph
+
+<img width="2960" height="1622" alt="image" src="https://github.com/user-attachments/assets/a4ad15a8-a708-4245-84d4-e0636b9a8704" />
+
