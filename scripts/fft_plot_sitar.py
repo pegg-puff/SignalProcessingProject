@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Load FFT output
-fft_data = np.loadtxt("output/sitar_output.csv", delimiter=",")
+fft_data = np.loadtxt("output/sitar.csv", delimiter=",")
 
 # Plot
 plt.figure(figsize=(12,6))
