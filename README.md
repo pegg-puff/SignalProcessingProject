@@ -44,7 +44,7 @@ python fft_plot_sitar.py
 
 ## Notes
 
-- All the code can be cloned and run on Google Colab. The graph is visible only in the colab notebook. In the output image it is blank for reasons I'm not able to comprehend.
+- All the code can be cloned and run on Google Colab. The **graph is visible only in the colab notebook**. In **the output image it is blank** for reasons I'm not able to comprehend.
 - The Python script uses `numpy` to read CSV data and `matplotlib` to plot it. Make sure both packages are installed in your Python environment.
 
 ## Dependencies
