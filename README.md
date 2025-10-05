@@ -12,7 +12,8 @@ SignalProcessingProject/
 │   ├── sitar.csv       # FFT data in CSV format
 │   └── sitar_fft.png          # Generated FFT plot
 ├── README.md                  # Project description
-└── other_scripts_or_files     # Any additional scripts or files
+└── src     # main cpp files and helper file
+└── data    # input csv file    
 ```
 
 ## Files Description
